@@ -1,0 +1,27 @@
+{
+  "name": "menu-dospuntocero-cli",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sirikon/menu-dospuntocero-cli.git"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/sirikon/menu-dospuntocero-cli/issues"
+  },
+  "bin": {
+    "menu": "bin/menu.js"
+  },
+  "homepage": "https://github.com/sirikon/menu-dospuntocero-cli#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "jsdom": "^15.1.1",
+    "qs": "^6.8.0"
+  }
+}
