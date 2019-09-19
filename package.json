@@ -2,9 +2,10 @@
   "name": "menu-dospuntocero-cli",
   "version": "0.0.1",
   "description": "",
-  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"No test specified\" && exit 0",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,8 @@
     "axios": "^0.19.0",
     "jsdom": "^15.1.1",
     "qs": "^6.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.4.0"
   }
 }
