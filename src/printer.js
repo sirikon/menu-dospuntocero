@@ -6,7 +6,7 @@ function printMenu(menu) {
 		console.log('No tienes nada para comer hoy :(');
 		return;
 	}
-	const headerText = `Menú para hoy, ${menu.date.getDate()} de ${MONTHS[menu.date.getMonth()]}:`;
+	const headerText = `Menú para el ${menu.date.getDate()} de ${MONTHS[menu.date.getMonth()]}:`;
 	const footerText = `${menu.kcal} KCal`;
 	printBox(headerText, menu.dishes, footerText);
 }
@@ -21,8 +21,7 @@ function printError(err) {
 
 function printBox(header, lines, footer) {
 	const width = getWidth(lines.concat([header, footer])) + 2;
-
-	console.log(` ${pad(' ', width)} `);
+	console.log();
 	console.log(`  ${header}${pad(' ', width - header.length - 2)}  `);
 	console.log(`┌${pad('─', width)}┐`);
 	lines.forEach(line => {
@@ -30,6 +29,7 @@ function printBox(header, lines, footer) {
 	});
 	console.log(`└${pad('─', width)}┘`);
 	console.log(`  ${pad(' ', width - footer.length - 2)}${footer}  `);
+	console.log();
 }
 
 function pad(pad, length) {
