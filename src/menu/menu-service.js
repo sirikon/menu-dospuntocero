@@ -32,15 +32,14 @@ async function login(user, password) {
 	return sessionId;
 }
 
-async function getMenu(sessionId) {
+async function getMenu(sessionId, date) {
 	const url = getMenuUrl();
 
-	const today = new Date();
-	const todayFormatted = `${today.getDate()}/${today.getMonth()+1}/${today.getFullYear()}`;
+	const dateFormatted = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
 
 	const data = {
-		desde: todayFormatted,
-		hasta: todayFormatted
+		desde: dateFormatted,
+		hasta: dateFormatted
 	};
 
 	const request = {
@@ -56,7 +55,10 @@ async function getMenu(sessionId) {
 
 	const ordersTable = dom.window.document.querySelector('#tablaPedidos .listadomenu .grupo');
 
-	return htmlParser.parseMenu(ordersTable);
+	const menu = htmlParser.parseMenu(ordersTable);
+	menu.date = date;
+
+	return menu;
 }
 
 async function getSessionId() {

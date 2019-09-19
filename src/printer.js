@@ -6,8 +6,7 @@ function printMenu(menu) {
 		console.log('No tienes nada para comer hoy :(');
 		return;
 	}
-	const today = new Date();
-	const headerText = `Menú para hoy, ${today.getDate()} de ${MONTHS[today.getMonth()]}:`;
+	const headerText = `Menú para hoy, ${menu.date.getDate()} de ${MONTHS[menu.date.getMonth()]}:`;
 	const footerText = `${menu.kcal} KCal`;
 	printBox(headerText, menu.dishes, footerText);
 }
