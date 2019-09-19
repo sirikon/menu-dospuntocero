@@ -26,6 +26,10 @@ Create the file `~/.menudospuntocero` with a structure like this:
 
 Just run:
 
-```
+```bash
 menu
+menu tomorrow
+menu monday
+menu next monday
+# etc
 ```
