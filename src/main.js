@@ -8,7 +8,7 @@ async function main() {
 		await run();
 	} catch (err) {
 		printer.printError(err);
-	}	
+	}
 }
 
 async function run() {
@@ -16,11 +16,20 @@ async function run() {
 
 	const when = process.argv.length > 2 ? process.argv.slice(2).join(' ') : 'today';
 	const date = Sugar.Date.create(when);
+	if (!isValidDate(date)) {
+		console.log(`No he entendido la expresión de fecha '${when}'.`);
+		console.log('Por ahora sólo entiendo expresiones en inglés. Tenlo en cuenta...');
+		return;
+	}
 
 	const sessionId = await menuService.login(config.user, config.password);
 	const menu = await menuService.getMenu(sessionId, date);
 
 	printer.printMenu(menu);
+}
+
+function isValidDate(date) {
+	return !isNaN(date.getTime());
 }
 
 main().then(() => {}, (err) => {
