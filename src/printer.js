@@ -2,7 +2,7 @@ const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 
 const AppError = require('./app-error');
 
 function printMenu(menu) {
-	if (menu.empty) {
+	if (!menu.dishes.length) {
 		console.log('No tienes nada para comer hoy :(');
 		return;
 	}

@@ -53,7 +53,10 @@ async function getMenu(sessionId, date) {
 	const dom = new JSDOM(response.data);
 	htmlParser.verifyIdentificationElementExists(dom.window.document);
 
-	const ordersTable = dom.window.document.querySelector('#tablaPedidos .listadomenu .grupo');
+	const anyGroup = dom.window.document.querySelector('#tablaPedidos .listadomenu .grupo');
+	if (!anyGroup) { return { dishes: [] }; }
+
+	const ordersTable = dom.window.document.querySelector('#tablaPedidos .listadomenu .grupo').parentElement;
 
 	const menu = htmlParser.parseMenu(ordersTable);
 	menu.date = date;

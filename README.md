@@ -7,8 +7,7 @@ Prints today's menu.
 ```bash
 git clone https://github.com/sirikon/menu-dospuntocero.git
 cd menu-dospuntocero
-npm i --production
-npm link
+npm i -g
 ```
 
 ## Configuration

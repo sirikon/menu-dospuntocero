@@ -1,18 +1,28 @@
-function parseMenu(menu, _result) {
-	const result = _result || {
+function parseMenu(menu) {
+	const result =  {
 		kcal: 0,
-		empty: false,
 		dishes: []
 	};
 
-	if (!menu) {
-		result.empty = true;
-		return result;
+	const groups = menu.querySelectorAll('.grupo');
+	for(let i = 0; i < groups.length; i++) {
+		const groupResult = parseMenuGroup(groups[i]);
+		result.kcal += groupResult.kcal;
+		result.dishes = result.dishes.concat(groupResult.dishes);
 	}
 
-	result.kcal = readKCalFromMenu(menu);
+	return result;
+}
+
+function parseMenuGroup(menuGroup) {
+	const result =  {
+		kcal: 0,
+		dishes: []
+	};
+
+	result.kcal = readKCalFromMenu(menuGroup);
     
-	const dishes = menu.querySelectorAll('dd:not(.tit)');
+	const dishes = menuGroup.querySelectorAll('dd:not(.tit)');
 	for(let x = 0; x < dishes.length; x++) {
 		result.dishes.push(dishes[x].textContent.trim());
 	}
@@ -41,6 +51,7 @@ function readKCalFromMenu(menu) {
 
 const htmlParser = {
 	parseMenu,
+	parseMenuGroup,
 	verifyIdentificationElementExists
 };
 
