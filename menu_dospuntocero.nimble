@@ -13,3 +13,6 @@ binDir        = "out"
 # Dependencies
 
 requires "nim >= 1.2.0"
+
+task release, "generate binary for distribution":
+    exec "nimble build -d:release --opt:size && strip -s ./out/*"

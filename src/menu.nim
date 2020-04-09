@@ -1,11 +1,9 @@
-import terminal
+import ui/userInput
+import api/menu20
 
-import ./api
+let credentials = userInput.askForCredentials()
+echo credentials
 
-write(stdout, "Username: ")
-var username = readLine(stdin)
-var password = readPasswordFromStdin("Password: ")
-
-let token = api.login(username, password)
+let token = menu20.login(credentials)
 echo "Token: ", token
-echo api.verifyToken(token)
+echo menu20.verifyToken(token)
