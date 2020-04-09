@@ -1,21 +1,11 @@
-import httpClient
-import strutils
-# import marshal
+import terminal
 
-proc parseSetCookieHeader(h: string): string =
-    let keyValueChunk = split(h, ";")[0]
-    let keyValueParts = split(keyValueChunk, "=")
-    if keyValueParts.len == 2:
-        return keyValueParts[1]
-    else:
-        return ""
+import ./api
 
-let client = newHttpClient()
-let response = client.get("https://micuenta.menudospuntocero.com/index.php?idioma=es&seccion=11&ctipo=15&contenido=0&accion=mnuuser&opcion=identificar")
+write(stdout, "Username: ")
+var username = readLine(stdin)
+var password = readPasswordFromStdin("Password: ")
 
-if not response.headers.hasKey("Set-Cookie"):
-    echo "No cookie found :("
-    quit 0
-
-let cookie = parseSetCookieHeader(response.headers["Set-Cookie"])
-echo "Cookie: [", cookie, "]"
+let token = api.login(username, password)
+echo "Token: ", token
+echo api.verifyToken(token)
