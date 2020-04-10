@@ -1,1 +1,3 @@
 /out
+/tests/*
+!/tests/*.nim
