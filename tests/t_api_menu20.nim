@@ -24,8 +24,8 @@ suite "Menu 2.0 API - Login HTML parsing":
             <div class="latiguilloSuperior">
                 <div class="centrador">
                     <img src="" />
-                    Bienvenido/a, John Doe
+                    Bienvenido/a, John Doe (Umbrella Corp)
                 </div>
             </div>
         """
-        check verifyIsLoggedIn(html) == (true, "John Doe")
+        check verifyIsLoggedIn(html) == (true, "John Doe (Umbrella Corp)")
