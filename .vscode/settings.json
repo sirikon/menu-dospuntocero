@@ -1,0 +1,8 @@
+{
+  "editor.detectIndentation": false,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "nim.lintOnSave": true,
+  "nim.nimprettyIndent": 2,
+  "nim.enableNimsuggest": true,
+}
