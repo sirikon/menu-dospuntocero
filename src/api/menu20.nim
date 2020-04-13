@@ -9,6 +9,7 @@ import ../domain/models
 
 const BASE_URL = "https://micuenta.menudospuntocero.com/index.php"
 const LOGIN_URL = BASE_URL & "?idioma=es&seccion=11&ctipo=15&contenido=0&accion=mnuuser&opcion=identificar"
+const MENU_URL = BASE_URL & "?idioma=es&seccion=11&ctipo=15&contenido=0&accion=mnuuser&opcion=pedidos"
 const BASE_HEADERS = {
   "Host": "micuenta.menudospuntocero.com",
   "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv69.0) Gecko/20100101 Firefox/69.0",
@@ -23,8 +24,7 @@ const BASE_HEADERS = {
   "Cache-Control": "no-cache",
 }.toSeq
 
-proc buildHeaders(headers: openArray[tuple[key: string,
-    val: string]]): HttpHeaders =
+proc buildHeaders(headers: openArray[tuple[key: string, val: string]]): HttpHeaders =
   return newHttpHeaders(concat(BASE_HEADERS, headers.toSeq))
 
 proc parseSetCookieHeader(h: string): string =
@@ -52,16 +52,18 @@ proc verifyIsLoggedIn(html: string): (bool, string) =
             if text.startsWith("Bienvenido"):
               result = (true, parseVerificationText(text))
 
-
 proc login*(credentials: Credentials): string =
   let client = newHttpClient()
   let response = client.request(
-      url = LOGIN_URL,
-      httpMethod = "POST",
-      body = "usuario=" & encodeUrl(credentials.username) & "&password=" &
-          encodeUrl(credentials.password) & "&Entrar=Entrar%C2%A0%C2%BB",
-      headers = buildHeaders({
-          "Content-Type": "application/x-www-form-urlencoded",
+    url = LOGIN_URL,
+    httpMethod = "POST",
+    body = {
+      "usuario": credentials.username,
+      "password": credentials.password,
+      "Entrar": "Entrar »"
+    }.encodeQuery(),
+    headers = buildHeaders({
+      "Content-Type": "application/x-www-form-urlencoded",
     })
   )
   if not response.headers.hasKey("Set-Cookie"):
@@ -71,11 +73,41 @@ proc login*(credentials: Credentials): string =
 proc verifyToken*(token: string): (bool, string) =
   let client = newHttpClient()
   let response = client.request(
-      url = BASE_URL,
-      httpMethod = "GET",
-      headers = buildHeaders({
-          "Cookie": "PHPSESSID=" & token,
+    url = BASE_URL,
+    httpMethod = "GET",
+    headers = buildHeaders({
+      "Cookie": "PHPSESSID=" & token,
     })
   )
-
   return verifyIsLoggedIn(response.body)
+
+proc getMenu*(token: string, date: string): seq[string] =
+  let client = newHttpClient()
+  let response = client.request(
+    url = MENU_URL,
+    httpMethod = "POST",
+    body = {
+      "ssl": "1",
+      "idioma": "",
+      "seccion": "11",
+      "ctipo": "15",
+      "contenido": "0",
+      "accion": "mnuuser",
+      "opcion": "pedidos",
+      "desde": date,
+      "hasta": date,
+      "botonListado": "Listado"
+    }.encodeQuery(),
+    headers = buildHeaders({
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Cookie": "PHPSESSID=" & token,
+    })
+  )
+  var plates = newSeq[string]()
+  let document = parseHtml(response.body)
+  for el in document.findAll("td"):
+    if el.attr("class") == "normal listadomenu":
+      for el in el.findAll("dd"):
+        if el.attr("class") != "tit":
+          plates.add(el.attr("title"))
+  return plates

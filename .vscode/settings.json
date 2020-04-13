@@ -4,5 +4,6 @@
   "editor.tabSize": 2,
   "nim.lintOnSave": true,
   "nim.nimprettyIndent": 2,
-  "nim.enableNimsuggest": true,
+  "nim.nimprettyMaxLineLen": 90,
+  "nim.enableNimsuggest": true
 }
