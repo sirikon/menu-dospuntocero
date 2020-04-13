@@ -7,18 +7,19 @@ import sequtils
 
 import ../domain/models
 
-const BASE_URL = "https://micuenta.menudospuntocero.com/index.php"
+const DOMAIN = "micuenta.menudospuntocero.com"
+const BASE_URL = "https://" & DOMAIN & "/index.php"
 const LOGIN_URL = BASE_URL & "?idioma=es&seccion=11&ctipo=15&contenido=0&accion=mnuuser&opcion=identificar"
 const MENU_URL = BASE_URL & "?idioma=es&seccion=11&ctipo=15&contenido=0&accion=mnuuser&opcion=pedidos"
 const BASE_HEADERS = {
-  "Host": "micuenta.menudospuntocero.com",
-  "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv69.0) Gecko/20100101 Firefox/69.0",
+  "Host": DOMAIN,
+  "User-Agent": "menu-dospuntocero/0.1.0 (github.com/sirikon/menu-dospuntocero)",
   "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
   "Accept-Language": "es-ES,es;q=0.8,en-US;q=0.5,en;q=0.3",
   "DNT": "1",
   "DNT": "1",
   "Connection": "keep-alive",
-  "Referer": "https://micuenta.menudospuntocero.com/index.php",
+  "Referer": BASE_URL,
   "Upgrade-Insecure-Requests": "1",
   "Pragma": "no-cache",
   "Cache-Control": "no-cache",
